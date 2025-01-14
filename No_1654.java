@@ -8,7 +8,7 @@ public class No_1654 {
         int N = sc.nextInt();
 
         int[] arr = new int[K];
-        long max = 0;
+        long max = 0;  // int가 아니라 long을 사용
 
         for (int i = 0; i < K; i++) {
             arr[i] = sc.nextInt();
@@ -19,8 +19,8 @@ public class No_1654 {
 
         max ++;
 
-        long min = 1;
-        long mid = 0;
+        long min = 1;  // int가 아니라 long을 사용
+        long mid = 0;  // int가 아니라 long을 사용
 
         while (min < max) {
             mid = (max + min) / 2;
