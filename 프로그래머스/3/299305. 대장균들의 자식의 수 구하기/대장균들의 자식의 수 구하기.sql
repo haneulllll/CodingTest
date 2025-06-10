@@ -1,0 +1,12 @@
+-- E1: 부모후보 / E2: 자식후보
+SELECT 
+    E1.ID,  -- 부모 역할
+    COUNT(E2.ID) AS CHILD_COUNT  -- E1.ID를 PARENT_ID로 갖는 자식들(E2) 수
+FROM 
+    ECOLI_DATA E1
+LEFT JOIN 
+    ECOLI_DATA E2 ON E1.ID = E2.PARENT_ID  
+GROUP BY 
+    E1.ID
+ORDER BY 
+    E1.ID ASC;
