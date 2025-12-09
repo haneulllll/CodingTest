@@ -1,0 +1,30 @@
+WITH member AS (
+    -- 2021년에 가입한 전체 회원
+    SELECT USER_ID
+    FROM USER_INFO
+    WHERE YEAR(JOINED) = 2021
+)
+, join_ct AS (
+    -- 2021년에 가입한 전체 회원수
+    SELECT COUNT(DISTINCT USER_ID) AS JOIN_CT
+    FROM member
+)
+, split_date AS (
+    -- 판매일자를 YEAR,MONTH 칼럼으로 분리
+    SELECT 
+        YEAR(SALES_DATE) AS YEAR,
+        MONTH(SALES_DATE) AS MONTH,
+        USER_ID
+    FROM ONLINE_SALE
+)
+
+SELECT 
+    C.YEAR,
+    C.MONTH,
+    COUNT(DISTINCT C.USER_ID) AS PURCHASED_USERS,
+    ROUND(COUNT(DISTINCT C.USER_ID) / J.JOIN_CT, 1) AS PUCHASED_RATIO
+FROM split_date C
+JOIN member M ON C.USER_ID = M.USER_ID
+CROSS JOIN join_ct J 
+GROUP BY C.YEAR, C.MONTH
+ORDER BY C.YEAR, C.MONTH ASC
